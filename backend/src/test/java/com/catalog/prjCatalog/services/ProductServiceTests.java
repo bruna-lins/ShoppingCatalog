@@ -57,6 +57,8 @@ public class ProductServiceTests {
 
 	@BeforeEach
 	void setUp() throws Exception {
+
+		// Preparation of variables
 		existingId = 1L;
 		nonExistingId = 2L;
 		dependentId = 3L;
@@ -65,10 +67,11 @@ public class ProductServiceTests {
 		productDTO = Factory.createProductDTO();
 		page = new PageImpl<>(List.of(product));
 
+		// Simulation of repositories
 		when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
 
 		when(repository.save(ArgumentMatchers.any())).thenReturn(product);
-		
+
 		when(repository.getOne(existingId)).thenReturn(product);
 		when(repository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
 
@@ -83,34 +86,7 @@ public class ProductServiceTests {
 		doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependentId);
 	}
 
-	@Test
-	public void findByIdShouldReturnProductDTOWhenIdExists() {
-		ProductDTO result = service.findById(existingId);
-
-		Assertions.assertNotNull(result);
-	}
-	
-	@Test
-	public void updateShouldReturnProductDTOWhenIdExists() { 
-		ProductDTO result = service.update(existingId, productDTO);
-		
-		Assertions.assertNotNull(result);
-	}
-	
-	@Test
-	public void updateShouldReturnThrowResourceNotFoundExceptionWhenIdDoesNotExist() { 
-		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.update(nonExistingId, productDTO);
-		});
-	}
-
-	@Test
-	public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
-		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.findById(nonExistingId);
-		});
-	}
-
+	// FindAll Tests
 	@Test
 	public void findAllPagedShouldReturnPage() {
 		Pageable pageable = PageRequest.of(0, 10);
@@ -121,6 +97,50 @@ public class ProductServiceTests {
 		verify(repository).findAll(pageable);
 	}
 
+	// FindById Tests
+	@Test
+	public void findByIdShouldReturnProductDTOWhenIdExists() {
+		ProductDTO result = service.findById(existingId);
+
+		Assertions.assertNotNull(result);
+	}
+
+	@Test
+	public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+			service.findById(nonExistingId);
+		});
+	}
+
+	// Insert Tests
+	@Test
+	public void insertShouldSaveDataWhenIdDoesNotExist() {
+		ProductDTO result = service.insert(productDTO);
+		
+		Assertions.assertEquals(productDTO.getId(), result.getId());
+		Assertions.assertEquals(productDTO.getName(), result.getName());
+		Assertions.assertEquals(productDTO.getDescription(), result.getDescription());
+		Assertions.assertEquals(productDTO.getPrice(), result.getPrice());
+		Assertions.assertEquals(productDTO.getImgUrl(), result.getImgUrl());
+		Assertions.assertEquals(productDTO.getDate(), result.getDate());
+	}
+
+	// Update Tests
+	@Test
+	public void updateShouldReturnProductDTOWhenIdExists() {
+		ProductDTO result = service.update(existingId, productDTO);
+
+		Assertions.assertNotNull(result);
+	}
+
+	@Test
+	public void updateShouldReturnThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+			service.update(nonExistingId, productDTO);
+		});
+	}
+
+	// Delete Tests
 	@Test
 	public void deleteShouldDoNothingWhenIdExists() {
 		Assertions.assertDoesNotThrow(() -> {
