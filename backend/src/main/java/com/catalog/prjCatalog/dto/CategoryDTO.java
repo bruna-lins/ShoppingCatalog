@@ -1,8 +1,12 @@
 package com.catalog.prjCatalog.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import com.catalog.prjCatalog.entities.Category;
+import com.catalog.prjCatalog.entities.Product;
 
 public class CategoryDTO implements Serializable {
 
@@ -10,6 +14,8 @@ public class CategoryDTO implements Serializable {
 
 	private Long id;
 	private String name;
+	
+	private List<ProductDTO> products = new ArrayList<>();
 
 	public CategoryDTO() {
 		super();
@@ -23,6 +29,11 @@ public class CategoryDTO implements Serializable {
 	public CategoryDTO(Category entity) { 
 		this.id = entity.getId();
 		this.name = entity.getName();
+	}
+	
+	public CategoryDTO(Category entity, Set<Product> products) {
+		this(entity);
+		products.forEach(product -> this.products.add(new ProductDTO(product)));
 	}
 
 	public Long getId() {
