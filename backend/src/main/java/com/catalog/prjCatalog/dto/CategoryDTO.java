@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 import com.catalog.prjCatalog.entities.Category;
 import com.catalog.prjCatalog.entities.Product;
 
@@ -13,6 +15,8 @@ public class CategoryDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@NotBlank(message = "Campo inválido")
 	private String name;
 	
 	private List<ProductDTO> products = new ArrayList<>();
