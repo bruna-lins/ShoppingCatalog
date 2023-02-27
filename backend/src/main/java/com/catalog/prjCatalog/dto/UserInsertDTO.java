@@ -1,5 +1,8 @@
 package com.catalog.prjCatalog.dto;
 
+import com.catalog.prjCatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 
 	private static final long serialVersionUID = 1L;
