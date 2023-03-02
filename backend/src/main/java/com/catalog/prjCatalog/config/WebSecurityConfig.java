@@ -22,13 +22,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 
 	@Override
-	public void configure(WebSecurity web) throws Exception { 
-		web.ignoring().antMatchers("/actuator/**");
-	}
-
-	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception { 
+		web.ignoring().antMatchers("/actuator/**");
 	}
 
 	@Override
