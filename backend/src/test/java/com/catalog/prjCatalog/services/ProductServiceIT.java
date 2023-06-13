@@ -53,39 +53,39 @@ public class ProductServiceIT {
 		});
 	}
 
-//	@Test
-//	public void findAllPagedShouldReturnPageWhenPageExists() {
-//
-//		PageRequest pageRequest = PageRequest.of(0, 10);
-//
-//		Page<ProductDTO> result = service.findAllPaged(pageRequest);
-//
-//		assertFalse(result.isEmpty());
-//		assertEquals(0, result.getNumber());
-//		assertEquals(10, result.getSize());
-//		assertEquals(countTotalProducts, result.getTotalElements());
-//	}
-//
-//	@Test
-//	public void findAllPagedShouldReturnEmptyWhenPageDoesNotExist() {
-//
-//		PageRequest pageRequest = PageRequest.of(100, 10);
-//
-//		Page<ProductDTO> result = service.findAllPaged(pageRequest);
-//
-//		assertTrue(result.isEmpty());
-//	}
-//
-//	@Test
-//	public void findAllPagedShouldReturnSortedPageWhenSortByName() {
-//		PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("name"));
-//
-//		Page<ProductDTO> result = service.findAllPaged(pageRequest);
-//
-//		assertFalse(result.isEmpty());
-//		assertEquals("Macbook Pro", result.getContent().get(0).getName());
-//		assertEquals("PC Gamer", result.getContent().get(1).getName());
-//		assertEquals("PC Gamer Alfa", result.getContent().get(2).getName());
-//	}
+	@Test
+	public void findAllPagedShouldReturnPageWhenPageExists() {
+
+		PageRequest pageRequest = PageRequest.of(0, 10);
+
+		Page<ProductDTO> result = service.findAllPaged(0L, "",pageRequest);
+
+		assertFalse(result.isEmpty());
+		assertEquals(0, result.getNumber());
+		assertEquals(10, result.getSize());
+		assertEquals(countTotalProducts, result.getTotalElements());
+	}
+
+	@Test
+	public void findAllPagedShouldReturnEmptyWhenPageDoesNotExist() {
+
+		PageRequest pageRequest = PageRequest.of(100, 10);
+
+		Page<ProductDTO> result = service.findAllPaged(0L, "",pageRequest);
+
+		assertTrue(result.isEmpty());
+	}
+
+	@Test
+	public void findAllPagedShouldReturnSortedPageWhenSortByName() {
+		PageRequest pageRequest = PageRequest.of(0, 10, Sort.by("name"));
+
+		Page<ProductDTO> result = service.findAllPaged(0L, "", pageRequest);
+
+		assertFalse(result.isEmpty());
+		assertEquals("Macbook Pro", result.getContent().get(0).getName());
+		assertEquals("PC Gamer", result.getContent().get(1).getName());
+		assertEquals("PC Gamer Alfa", result.getContent().get(2).getName());
+	}
 
 }
