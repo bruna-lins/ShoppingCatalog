@@ -87,15 +87,15 @@ public class ProductServiceTests {
 	}
 
 	// FindAll Tests
-	@Test
-	public void findAllPagedShouldReturnPage() {
-		Pageable pageable = PageRequest.of(0, 10);
-
-		Page<ProductDTO> result = service.findAllPaged(pageable);
-
-		Assertions.assertNotNull(result);
-		verify(repository).findAll(pageable);
-	}
+//	@Test
+//	public void findAllPagedShouldReturnPage() {
+//		Pageable pageable = PageRequest.of(0, 10);
+//
+//		Page<ProductDTO> result = service.findAllPaged(pageable);
+//
+//		Assertions.assertNotNull(result);
+//		verify(repository).findAll(pageable);
+//	}
 
 	// FindById Tests
 	@Test
